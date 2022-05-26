@@ -46,20 +46,24 @@
         (set! ptr #f)))
 
     (define/public (ok?)
-      (when ptr
-        (sfFtpListingResponse_isOk ptr)))
+      (if ptr
+          (sfFtpListingResponse_isOk ptr)
+          #f))
 
     (define/public (get-status)
-      (when ptr
-        (sfFtpListingResponse_getStatus ptr)))
+      (if ptr
+          (sfFtpListingResponse_getStatus ptr)
+          #f))
 
     (define/public (get-message)
-      (when ptr
-        (sfFtpListingResponse_getMessage ptr)))
+      (if ptr
+          (sfFtpListingResponse_getMessage ptr)
+          #f))
 
     (define/public (get-count)
-      (when ptr
-        (sfFtpListingResponse_getCount ptr)))
+      (if ptr
+          (sfFtpListingResponse_getCount ptr)
+          #f))
 
     (define/public (get-name index)
       (when ptr
@@ -86,20 +90,24 @@
         (set! ptr #f)))
 
     (define/public (ok?)
-      (when ptr
-        (sfFtpDirectoryResponse_isOk ptr)))
+      (if ptr
+          (sfFtpDirectoryResponse_isOk ptr)
+          #f))
 
     (define/public (get-status)
-      (when ptr
-        (sfFtpDirectoryResponse_getStatus ptr)))
+      (if ptr
+          (sfFtpDirectoryResponse_getStatus ptr)
+          #f))
 
     (define/public (get-message)
-      (when ptr
-        (sfFtpDirectoryResponse_getMessage ptr)))
+      (if ptr
+          (sfFtpDirectoryResponse_getMessage ptr)
+          #f))
 
     (define/public (get-directory)
-      (when ptr
-        (sfFtpDirectoryResponse_getDirectory ptr)))))
+      (if ptr
+          (sfFtpDirectoryResponse_getDirectory ptr)
+          #f))))
 
 (define (ftp-directory-response? object-clause)
   (is-a? object-clause ftp-directory-response%))
@@ -122,26 +130,22 @@
         (set! ptr #f)))
     
     (define/public (ok?)
-      (when ptr
-        (sfFtpResponse_isOk ptr)))
+      (if ptr
+          (sfFtpResponse_isOk ptr)
+          #f))
 
     (define/public (get-status)
-      (when ptr
-        (sfFtpResponse_getStatus ptr)))
+      (if ptr
+          (sfFtpResponse_getStatus ptr)
+          #f))
 
     (define/public (get-message)
-      (when ptr
-        (sfFtpResponse_getMessage ptr)))))
+      (if ptr
+          (sfFtpResponse_getMessage ptr)
+          #f))))
 
 (define (ftp-response? object-clause)
   (is-a? object-clause ftp-response%))
-
-(define (ftp-response-set? object-clause)
-  (if (implements-ftp-response? object-clause)
-      (if (send object-clause pointer)
-          #t
-          #f)
-      #f))
 
 (define ftp%
   (class object%
@@ -254,12 +258,6 @@
               set-pointer
               (sfFtp_createDirectory ptr name)))
       out)
-
-    (define/public (mkdir name)
-      (send this make-directory name))
-
-    (define/public (create-directory name)
-      (send this make-directory name))
     
     (define/public (remove-directory name)
       (define out (new ftp-response%))
@@ -268,9 +266,6 @@
               set-pointer
               (sfFtp_deleteDirectory ptr name)))
       out)
-
-    (define/public (delete-directory name)
-      (send this remove-directory name))
 
     (define/public (rename-file file-name new-name)
       (define out (new ftp-response%))
@@ -290,15 +285,6 @@
 
     (define/public (delete-file name)
       (send this remove-file name))
-
-    (define/public (rm sym name)
-      (cond [(eq? sym 'file)
-             (send this remove-file name)]
-            [(eq? sym 'dir)
-             (send this remove-directory name)]
-            [else
-             (printf "arity mismatch: expected 'file or 'dir, got ~a" sym)
-             #f]))
 
     (define/public (download remote-file local-path mode)
       (define out (new ftp-response%))
@@ -349,11 +335,6 @@
       (when (sfHttpRequest*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
     
     (define/public (set-field name value)
       (when ptr
@@ -369,8 +350,8 @@
 
     (define/public (set-http-version major minor)
       (when ptr
-        (sfHttpRequest_setHttpVersion (abs (inexact->exact (floor major)))
-                                      (abs (inexact->exact (floor minor))))))
+        (sfHttpRequest_setHttpVersion (abs (inexact->exact (truncate major)))
+                                      (abs (inexact->exact (truncate minor))))))
 
     (define/public (set-body body)
       (when ptr
@@ -390,11 +371,6 @@
     (define/public (set-pointer p)
       (when (sfHttpResponse*? p)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
 
     (define/public (kill)
       (when ptr
@@ -451,11 +427,6 @@
       (when (sfHttp*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
     
     (define/public (set-host hostname port)
       (when ptr
@@ -497,11 +468,6 @@
       (when (sfPacket*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
     
     (define/public (copy)
       (define out (new packet%))
@@ -688,11 +654,6 @@
       (when (sfTcpListener*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
     
     (define/public (set-blocking flag)
       (when (and ptr
@@ -852,11 +813,6 @@
         (send this kill)
         (set! ptr p)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
     (define/public (set-blocking flag)
       (when (and ptr
                  (boolean? flag))
@@ -946,11 +902,6 @@
         (send this kill)
         (set! ptr p)))
     
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-    
     (define/public (copy)
       (define out (new socket-selector%))
       (when ptr
@@ -1021,6 +972,3 @@
 
 (define (socket-selector? object-clause)
   (is-a? object-clause socket-selector%))
-
-    
-
