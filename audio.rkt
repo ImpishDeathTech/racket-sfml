@@ -67,8 +67,17 @@
     (define/public (pointer) ptr)
 
     (define/public (set-pointer p)
-      (send this kill)
-      (set! ptr p))
+      (when (sfMusic*? p)
+        (send this kill)
+        (set! ptr p)))
+
+    (define/public (valid?)
+      (if ptr
+          #t
+          #f))
+
+    (define/public (is-valid?)
+      (send this valid?))
     
     (define/public (set-loop flag)
       (when ptr
@@ -77,16 +86,19 @@
             (sfMusic_setLoop ptr #f))))
 
     (define/public (get-loop)
-      (when ptr
-        (sfMusic_getLoop ptr)))
+      (if ptr
+          (sfMusic_getLoop ptr)
+          #f))
 
     (define/public (get-duration)
-      (when ptr
-        (sfMusic_getDuration ptr)))
+      (if ptr
+          (sfMusic_getDuration ptr)
+          #f))
 
     (define/public (get-loop-points)
-      (when ptr
-        (sfMusic_getLoopPoints ptr)))
+      (if ptr
+          (sfMusic_getLoopPoints ptr)
+          #f))
 
     (define/public (set-loop-points span)
       (when ptr
@@ -105,20 +117,24 @@
         (sfMusic_pause ptr)))
 
     (define/public (get-channel-count)
-      (when ptr
-        (sfMusic_getChannelCount ptr)))
+      (if ptr
+          (sfMusic_getChannelCount ptr)
+          #f))
 
     (define/public (get-sample-rate)
-      (when ptr
-        (sfMusic_getSampleRate ptr)))
+      (if ptr
+          (sfMusic_getSampleRate ptr)
+          #f))
 
     (define/public (get-status)
-      (when ptr
-        (sfMusic_getStatus ptr)))
+      (if ptr
+          (sfMusic_getStatus ptr)
+          #f))
 
     (define/public (get-playing-offset)
-      (when ptr
-        (sfMusic_getPlayingOffset ptr)))
+      (if ptr
+          (sfMusic_getPlayingOffset ptr)
+          #f))
 
     (define/public (set-pitch pitch)
       (when ptr
@@ -137,7 +153,7 @@
               (sfMusic_setPosition ptr (vector3 (car v3)
                                                 (cadr v3)
                                                 (caddr v3)))]
-             [else (printf "arity mismatch: expected vector3 or list (length 3), got ~a" v3)])))
+             [else (printf "type mismatch: expected vector3 or list (length 3), got ~a" v3)])))
 
     (define/public (set-relative-to-listener flag)
       (when ptr
@@ -160,28 +176,34 @@
             (sfMusic_setPlayingOffset ptr (seconds 0)))))
 
     (define/public (get-pitch)
-      (when ptr
-        (sfMusic_getPitch ptr)))
+      (if ptr
+          (sfMusic_getPitch ptr)
+          #f))
 
     (define/public (get-volume)
-      (when ptr
-        (sfMusic_getVolume ptr)))
+      (if ptr
+          (sfMusic_getVolume ptr)
+          #f))
 
     (define/public (get-position)
-      (when ptr
-        (sfMusic_getPosition ptr)))
+      (if ptr
+          (sfMusic_getPosition ptr)
+          #f))
 
     (define/public (relative-to-listener?)
-      (when ptr
-        (sfMusic_isRelativeToListener ptr)))
+      (if ptr
+          (sfMusic_isRelativeToListener ptr)
+          #f))
 
     (define/public (get-min-distance)
-      (when ptr
-        (sfMusic_getMinDistance ptr)))
+      (if ptr
+          (sfMusic_getMinDistance ptr)
+          #f))
 
     (define/public (get-attenuation)
-      (when ptr
-        (sfMusic_getAttenuation ptr)))))
+      (if ptr
+          (sfMusic_getAttenuation ptr)
+          #f))))
 
 (define (music? object-clause)
   (is-a? object-clause music%))
@@ -222,36 +244,52 @@
     (define/public (pointer) ptr)
 
     (define/public (set-pointer p)
-      (send this kill)
-      (set! ptr p))
+      (when (sfSoundBuffer*? p)
+        (send this kill)
+        (set! ptr p)))
+
+    (define/public (valid?)
+      (if ptr
+          #t
+          #f))
+
+    (define/public (is-valid?)
+      (send this valid?))
     
     (define/public (copy)
+      (define out (new sound-buffer%))
       (when ptr
-        (sfSoundBuffer_copy ptr)))
+        (send out set-pointer (sfSoundBuffer_copy ptr)))
+      out)
 
     (define/public (save-to-file path)
       (when ptr
         (sfSoundBuffer_saveToFile ptr path)))
 
     (define/public (get-samples)
-      (when ptr
-        (sfSoundBuffer_getSamples ptr)))
+      (if ptr
+          (sfSoundBuffer_getSamples ptr)
+          #f))
 
     (define/public (get-sample-count)
-      (when ptr
-        (sfSoundBuffer_getSampleCount ptr)))
+      (if ptr
+          (sfSoundBuffer_getSampleCount ptr)
+          #f))
 
     (define/public (get-sample-rate)
-      (when ptr
-        (sfSoundBuffer_getSampleRate ptr)))
+      (if ptr
+          (sfSoundBuffer_getSampleRate ptr)
+          #f))
 
     (define/public (get-channel-count)
-      (when ptr
-        (sfSoundBuffer_getChannelCount ptr)))
+      (if ptr
+          (sfSoundBuffer_getChannelCount ptr)
+          #f))
 
     (define/public (get-duration)
-      (when ptr
-        (sfSoundBuffer_getDuration ptr)))))
+      (if ptr
+          (sfSoundBuffer_getDuration ptr)
+          #f))))
 
 (define (sound-buffer? object-clause)
   (is-a? object-clause sound-buffer%))
@@ -277,8 +315,17 @@
     (define/public (pointer) ptr)
 
     (define/public (set-pointer p)
-      (send this kill)
-      (set! ptr #f))
+      (when (sfSoundBufferRecorder*? p)
+        (send this kill)
+        (set! ptr #f)))
+
+    (define/public (valid?)
+      (if ptr
+          #t
+          #f))
+
+    (define/public (is-valid?)
+      (send this valid?))
 
     (define/public (start sample-rate)
       (when ptr
@@ -289,20 +336,24 @@
         (sfSoundBufferRecorder_stop ptr)))
 
     (define/public (get-sample-rate)
-      (when ptr
-        (sfSoundBufferRecorder_getSampleRate ptr)))
+      (if ptr
+          (sfSoundBufferRecorder_getSampleRate ptr)
+          #f))
 
     (define/public (get-buffer)
+      (define out (new sound-buffer%))
       (when ptr
-        (sfSoundBufferRecorder_getBuffer ptr)))
+        (send out set-pointer (sfSoundBufferRecorder_getBuffer ptr)))
+      out)
 
     (define/public (set-device device-string)
       (when ptr
         (sfSoundBufferRecorder_setDevice ptr device-string)))
 
     (define/public (get-device)
-      (when ptr
-        (sfSoundBufferRecorder_getDevice ptr)))))
+      (if ptr
+          (sfSoundBufferRecorder_getDevice ptr)
+          #f))))
 
 (define (sound-buffer-recorder? object-clause)
   (is-a? object-clause sound-buffer-recorder%))
@@ -328,12 +379,23 @@
     (define/public (pointer) ptr)
 
     (define/public (set-pointer p)
-      (send this kill)
-      (set! ptr p))
+      (when (sfSound*? p)
+        (send this kill)
+        (set! ptr p)))
+
+    (define/public (valid?)
+      (if ptr
+          #t
+          #f))
+
+    (define/public (is-valid?)
+      (send this valid?))
 
     (define/public (copy)
+      (define out (new sound%))
       (when ptr
-        (sfSound_copy ptr)))
+        (send out set-pointer (sfSound_copy ptr)))
+      out)
 
     (define/public (play)
       (when ptr
@@ -354,9 +416,10 @@
         (sfSound_setBuffer ptr (send buffer pointer))))
 
     (define/public (get-buffer)
+      (define out (new sound-buffer%))
       (when ptr
-        (define out (new sound-buffer%))
-        (send out set-pointer (sfSound_getBuffer ptr))))
+        (send out set-pointer (sfSound_getBuffer ptr)))
+      out)
 
     (define/public (set-loop flag)
       (when ptr
@@ -365,12 +428,14 @@
             (sfSound_setLoop ptr #f))))
 
     (define/public (get-loop)
-      (when ptr
-        (sfSound_getLoop ptr)))
+      (if ptr
+          (sfSound_getLoop ptr)
+          #f))
 
     (define/public (get-status)
-      (when ptr
-        (sfSound_getStatus ptr)))
+      (if ptr
+          (sfSound_getStatus ptr)
+          #f))
 
     (define/public (set-pitch pitch)
       (when ptr
@@ -389,7 +454,7 @@
                (sfSound_setPosition ptr (vector3 (car v3)
                                                  (cadr v3)
                                                  (caddr v3)))]
-              [else (printf "arity mismatch: expected vector3 or list (length 3), got ~a" v3)])))
+              [else (printf "type mismatch: expected vector3 or list (length 3), got ~a" v3)])))
 
     (define/public (set-relative-to-listener flag)
       (when ptr
@@ -410,28 +475,37 @@
         (sfSound_setPlayingOffset ptr offset)))
 
     (define/public (get-pitch)
-      (when ptr
-        (sfSound_getPitch ptr)))
+      (if ptr
+          (sfSound_getPitch ptr)
+          #f))
 
     (define/public (get-volume)
-      (when ptr
-        (sfSound_getVolume ptr)))
+      (if ptr
+          (sfSound_getVolume ptr)
+          #f))
 
     (define/public (relative-to-listener?)
-      (when ptr
-        (sfSound_isRelativeToListener ptr)))
+      (if ptr
+          (sfSound_isRelativeToListener ptr)
+          #f))
+
+    (define/public (is-relative-to-listener?)
+      (send this relative-to-listener?))
 
     (define/public (get-min-distance)
-      (when ptr
-        (sfSound_getMinDistance ptr)))
+      (if ptr
+          (sfSound_getMinDistance ptr)
+          #f))
 
     (define/public (get-attenuation)
-      (when ptr
-        (sfSound_getAttenuation ptr)))
+      (if ptr
+          (sfSound_getAttenuation ptr)
+          #f))
 
     (define/public (get-playing-offset)
-      (when ptr
-        (sfSound_getPlayingOffset ptr)))))
+      (if ptr
+          (sfSound_getPlayingOffset ptr)
+          #f))))
 
 (define (sound? object-clause)
   (is-a? object-clause sound%))
@@ -457,8 +531,16 @@
     (define/public (pointer) ptr)
 
     (define/public (set-pointer p)
-      (send this kill)
-      (set! ptr p))
+        (send this kill)
+        (set! ptr p))
+
+    (define/public (valid?)
+      (if ptr
+          #t
+          #f))
+
+    (define/public (is-valid?)
+      (send this valid?))
 
     (define/public (start sample-rate)
       (when ptr
@@ -478,6 +560,9 @@
           (sfSoundRecorder_isAvailable ptr)
           #f))
 
+    (define/public (is-available?)
+      (send this available?))
+
     (define/public (set-processing-interval interval)
       (when ptr
         (if (time-struct? interval)
@@ -485,28 +570,32 @@
             (sfSoundRecorder_setProcessingInterval ptr (seconds 0)))))
 
     (define/public (get-available-devices)
-      (when ptr
-        (sfSoundRecorder_getAvailableDevices ptr)))
+      (if ptr
+          (sfSoundRecorder_getAvailableDevices ptr)
+          #f))
 
     (define/public (get-default-device)
-      (when ptr
-        (sfSoundRecorder_getDefaultDevice ptr)))
+      (if ptr
+          (sfSoundRecorder_getDefaultDevice ptr)
+          #f))
 
     (define/public (set-device device-string)
       (when ptr
         (sfSoundRecorder_setDevice ptr device-string)))
 
     (define/public (get-device)
-      (when ptr
-        (sfSoundRecorder_getDevice ptr)))
+      (if ptr
+          (sfSoundRecorder_getDevice ptr)
+          #f))
 
     (define/public (set-channel-count channel-count)
       (when ptr
         (sfSoundRecorder_setChannelCount ptr (abs (round channel-count)))))
 
     (define/public (get-channel-count)
-      (when ptr
-        (sfSoundRecorder_getChannelCount ptr)))))
+      (if ptr
+          (sfSoundRecorder_getChannelCount ptr)
+          #f))))
 
 (define (sound-recorder? object-clause)
   (is-a? object-clause sound-recorder%))
@@ -532,8 +621,17 @@
     (define/public (pointer) ptr)
 
     (define/public (set-pointer p)
-      (send this kill)
-      (set! ptr p))
+      (when (sfSoundStream*? p)
+        (send this kill)
+        (set! ptr p)))
+
+    (define/public (valid?)
+      (if ptr
+          #t
+          #f))
+
+    (define/public (is-valid?)
+      (send this valid?))
 
     (define/public (play)
       (when ptr
@@ -548,16 +646,18 @@
         (sfSoundStream_stop ptr)))
 
     (define/public (get-status)
-      (when ptr
-        (sfSoundStream_getStatus ptr)))
+      (if ptr
+          (sfSoundStream_getStatus ptr)
+          #f))
 
     (define/public (get-channel-count)
       (when ptr
         (sfSoundStream_getChannelCount ptr)))
 
     (define/public (get-sample-rate)
-      (when ptr
-        (sfSoundStream_getSampleRate ptr)))
+      (if ptr
+          (sfSoundStream_getSampleRate ptr)
+          #f))
 
     (define/public (set-pitch pitch)
       (when ptr
@@ -603,28 +703,37 @@
             (sfSoundStream_setLoop ptr #f))))
 
     (define/public (get-pitch)
-      (when ptr
-        (sfSoundStream_getPitch ptr)))
+      (if ptr
+          (sfSoundStream_getPitch ptr)
+          #f))
 
     (define/public (get-volume)
-      (when ptr
-        (sfSoundStream_getVolume ptr)))
+      (if ptr
+        (sfSoundStream_getVolume ptr)
+        #f))
 
     (define/public (relative-to-listener?)
-      (when ptr
-        (sfSoundStream_isRelativeToListener ptr)))
+      (if ptr
+          (sfSoundStream_isRelativeToListener ptr)
+          #f))
+
+    (define/public (is-relative-to-listener?)
+      (send this relative-to-listener?))
 
     (define/public (get-min-distance)
-      (when ptr
-        (sfSoundStream_getMinDistance ptr)))
+      (if ptr
+          (sfSoundStream_getMinDistance ptr)
+          #f))
 
     (define/public (get-loop)
-      (when ptr
-        (sfSoundStream_getLoop ptr)))
+      (if ptr
+          (sfSoundStream_getLoop ptr)
+          #f))
 
     (define/public (get-playing-offset)
-      (when ptr
-        (sfSoundStream_getPlayingOffset ptr)))))
+      (if ptr
+          (sfSoundStream_getPlayingOffset ptr)
+          #f))))
 
 (define (sound-stream? object-clause)
   (is-a? object-clause sound-stream%))
