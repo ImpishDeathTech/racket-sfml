@@ -383,8 +383,8 @@
 
 (define (vector2->pair v2)
   (if (or (vector2f? v2)
-          (or (vector2i? v2)
-              (vector2u? v2)))
+          (vector2i? v2)
+          (vector2u? v2))
       (cons (vector2-x v2)
             (vector2-y v2))
       null))
