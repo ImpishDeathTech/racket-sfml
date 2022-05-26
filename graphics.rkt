@@ -172,14 +172,6 @@
     (define/public (set-pointer p)
       (when (sfTransform? p)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
     
     (define/public (get-inverse)
       (if ptr
@@ -234,14 +226,13 @@
       (when ptr
         (sfTransform_scaleWithCenter ptr ox oy cx cy)))
 
-    (define/public (equal? tsfm)
+    (define/public (is-equal? tsfm)
       (if (and ptr
                (sfTransform? tsfm))
           (sfTransform_equal ptr tsfm)
-          #f))
+          #f))))
 
-    (define/public (is-equal? tsfm)
-      (send this equal? tsfm))))
+
 
 (define (transform? object-clause)
   (is-a? object-clause transform%))
@@ -292,11 +283,6 @@
       (when (sfTransformable*? p)
         (send this kill)
         (set! tsfm-ptr p)))
-
-    (define/public (valid?)
-      (if tsfm-ptr
-          #t
-          #f))
 
     (define/public (copy)
       (define out (new transformable%))
@@ -906,14 +892,6 @@
         (send this kill)
         (set! ptr p)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (copy)
       (define out (new image%))
       (when ptr
@@ -1032,14 +1010,6 @@
         (send this kill)
         (set! ptr p)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (copy)
       (define out (new texture%))
       (when ptr
@@ -1087,17 +1057,17 @@
             (sfTexture_setSmooth ptr flag)
             (sfTexture_setSmooth ptr #f))))
 
-    (define/public (smooth?)
+    (define/public (is-smooth?)
       (if ptr
           (sfTexture_isSmooth ptr)
           #f))
 
-    (define/public (set-sRGB srgb)
+    (define/public (set-srgb srgb)
       (when (and ptr
                  (boolean? srgb))
         (sfTexture_setSrgb ptr srgb)))
 
-    (define/public (sRGB?)
+    (define/public (is-srgb?)
       (if ptr
           (sfTexture_isSrgb ptr)
           #f))
@@ -1107,13 +1077,10 @@
                  (boolean? flag))
         (sfTexture_setRepeated ptr flag)))
 
-    (define/public (repeated?)
+    (define/public (is-repeated?)
       (if ptr
           (sfTexture_isRepeated ptr)
           #f))
-
-    (define/public (is-repeated?)
-      (send this repeated?))
 
     (define/public (generate-mipmap)
       (when ptr
@@ -1170,14 +1137,6 @@
       (when (sfView*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
 
     (define/public (copy)
       (define out (new view%))
@@ -1297,14 +1256,6 @@
         (set! ptr p)
         (set! show? #t)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (draw target states)
       (when (and ptr
                  show?)
@@ -1390,14 +1341,6 @@
         (set! ptr p)
         (set! show? #t)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (draw target states)
       (when ptr
         (sfRenderWindow_drawVertexBuffer target ptr states)))
@@ -1460,13 +1403,10 @@
       (when ptr
         (sfVertexBuffer_bind ptr)))
 
-    (define/public (available?)
+    (define/public (is-available?)
       (if ptr
           (sfVertexBuffer_isAvailable ptr)
-          #f))
-
-    (define/public (is-available?)
-      (send this available?))))
+          #f))))
 
 (define (vertex-buffer? object-clause)
   (is-a? object-clause vertex-buffer%))
@@ -1507,14 +1447,6 @@
         (send this kill)
         (set! ptr p)
         (set! show? #t)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
 
     (define/public (show flag)
       (if (boolean? flag)
@@ -1751,15 +1683,7 @@
         (send this kill)
         (set! ptr p)
         (set! show? #t)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
+    
     (define/public (show flag)
       (if (boolean? flag)
           (set! show? flag)
@@ -1973,14 +1897,6 @@
         (send this kill)
         (set! ptr p)
         (set! show? #t)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
     
     (define/public (show flag)
       (if (boolean? flag)
@@ -2219,14 +2135,6 @@
         (send this kill)
         (set! ptr p)
         (set! show? #t)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
     
     (define/public (show flag)
       (if (boolean? flag)
@@ -2423,13 +2331,6 @@
         (send this kill)
         (set! ptr p)
         (set! show? #t)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-    (define/public (is-valid?)
-      (send this valid?))
 
     (define/public (show flag)
       (if (boolean? flag)
@@ -2632,15 +2533,7 @@
         (send this kill)
         (set! ptr p)
         (set! show? #t)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
+    
     (define/public (draw target states)
       (when ptr
         (sfRenderWindow_drawText target ptr states)))
@@ -2837,15 +2730,7 @@
       (when (sfRenderTexture*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
+    
     (define/public (get-size)
       (when ptr
         (sfRenderTexture_getSize ptr)))
@@ -2961,26 +2846,20 @@
                  (boolean? flag))
         (sfRenderTexture_setSmooth ptr flag)))
 
-    (define/public (smooth?)
+    (define/public (is-smooth?)
       (if ptr
           (sfRenderTexture_isSmooth ptr)
           #f))
-
-    (define/public (is-smooth?)
-      (send this smooth?))
 
     (define/public (set-repeated flag)
       (when (and ptr
                  (boolean? flag))
         (sfRenderTexture_setRepeated ptr flag)))
 
-    (define/public (repeated?)
+    (define/public (is-repeated?)
       (if ptr
           (sfRenderTexture_isRepeated ptr)
           #f))
-
-    (define/public (is-repeated?)
-      (send this repeated?))
 
     (define/public (generate-mipmap)
       (when ptr
@@ -3026,12 +2905,10 @@
       (when ptr
         (sfRenderWindow_close ptr)))
 
-    (define/public (open?)
+    (define/public (is-open?)
       (if ptr
           (sfRenderWindow_isOpen ptr)
           #f))
-    (define/public (is-open?)
-      (send this open?))
 
     (define/public (get-settings)
       (if ptr
