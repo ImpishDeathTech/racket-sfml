@@ -159,15 +159,7 @@
       (when (sfContext*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
+    
     (define/public (set-active flag)
       (when ptr
         (sfContext_setActive ptr flag)))
@@ -205,14 +197,6 @@
       (when (sfCursor*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
     
     (define/public (kill)
       (when ptr
@@ -288,26 +272,15 @@
         (send this kill)
         (set! ptr p)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (close)
       (when ptr
         (sfWindow_close ptr)))
 
-    (define/public (open?)
+    (define/public (is-open?)
       (if ptr
           (sfWindow_isOpen ptr)
           #f))
-
-    (define/public (is-open?)
-      (send this open?))
-
+    
     (define/public (get-settings)
       (if ptr
           (sfWindow_getSettings ptr)
