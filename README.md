@@ -17,3 +17,27 @@ or hear you out on what you think this library needs! ^,..,^
 
 If you would like to use it with the `sf:` prefix, simply use `(require sfml/prefixed)`, otherwise, `(require sfml)` provides **almost** everything
 you'll need. 
+
+Note that the objects will **not** work until you 
+```racket
+(send object make)
+``` 
+to create the pointer, and you should **always** free the memory with 
+```racket
+(send object kill)
+```
+
+if not, "set" methods will do absolutely nothing (save for set-pointer), and "get" methods will generally return `#f` or an object with an empty pointer
+you can check if the pointer is set with
+```racket
+#|
+both below return a boolean value. I did this because I prefer the "valid?", 
+but I know people are going to want "is-valid?", so to save face and keep myself happy,
+I defined both.
+|#
+(send object valid?)
+(send object is-valid?)
+
+; below returns false or #<cpointer>
+(send object pointer)
+```
