@@ -321,6 +321,7 @@
       (when ptr
         (send out set-pointer (sfSoundBufferRecorder_getBuffer ptr)))
       out)
+      
 
     (define/public (set-device device-string)
       (when ptr
