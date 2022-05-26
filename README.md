@@ -32,15 +32,7 @@ if not, "set" methods will do absolutely nothing - save for "set-pointer" which 
 
 you can check if the pointer is set with
 ```racket
-#|
-both below return a boolean value. I did this because I prefer the "valid?", 
-but I know people are going to want "is-valid?", so to save face and keep myself happy,
-I defined both.
-|#
-(send object valid?)
-(send object is-valid?)
-
-; below returns false or #<cpointer>
+; returns false or #<cpointer>
 (send object pointer)
 ```
 In order to load textures, fonts, sounds and other loadable resources from files, you must use the **full path** to the resource in question. I didn't realize this at first, and it got me quite frustrated until I used a full path to a resource and it worked. Just some friendly tips for you >;3
