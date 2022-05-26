@@ -12,11 +12,11 @@ order to conform with racket syntax and maximize ease of use. Many objects and s
 renamed for this purpose as well.
 
 As of now, this library is quite operational, but still in development and incomplete in some aspects. Tweak it as needed,
-and let me know if you've improved anything or any input at all, I'd **love** to take a look at what you have to offer,
+and let me know if you've improved anything or have any input at all, I'd **love** to take a look at what you have to offer,
 or hear you out on what you think this library needs! ^,..,^
 
 If you would like to use it with the `sf:` prefix, simply use `(require sfml/prefixed)`, otherwise, `(require sfml)` provides **almost** everything
-you'll need. 
+you'll need. Untill I get everything fleshed out, just use csfml for what's not quite done yet.
 
 Note that the objects will **not** work until you 
 ```racket
