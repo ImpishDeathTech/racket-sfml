@@ -11,9 +11,9 @@ If you know sfml/csfml, you shouldn't have too much trouble with this library, t
 order to conform with racket syntax and maximize ease of use. Many objects and structures and functions have been
 renamed for this purpose as well.
 
-As of now, this library is quite operational, but still in development and incomplete in some aspects. Any tweaks !
-If you would like to contribute or have any input at all, I'd **love** to take a look at what you have to offer,
+As of now, this library is quite operational, but still in development and incomplete in some aspects. Tweak it as needed,
+and let me know if you've improved anything or any input at all, I'd **love** to take a look at what you have to offer,
 or hear you out on what you think this library needs! ^,..,^
 
 If you would like to use it with the `sf:` prefix, simply use `(require sfml/prefixed)`, otherwise, `(require sfml)` provides **almost** everything
-you'll need.
+you'll need. 
