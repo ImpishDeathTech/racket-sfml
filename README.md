@@ -42,3 +42,4 @@ I defined both.
 ; below returns false or #<cpointer>
 (send object pointer)
 ```
+In order to load textures, fonts, or sounds from files, you must use the **full path** to the resource in question. I didn't realize this at first, and it got me quite frustrated until I used a full path to a resource and it worked. Don't be a Fluffy, Fluffy is silly >;3
