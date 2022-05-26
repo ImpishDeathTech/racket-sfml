@@ -28,7 +28,7 @@ to create the pointer, and you should **always** free the memory with
 (send object kill)
 ```
 
-if not, "set" methods will do absolutely nothing (save for set-pointer), and "get" methods will generally return `#f` or an object with an empty pointer
+if not, "set" methods will do absolutely nothing - save for "set-pointer" which can be used to manually set the object's pointer provided it is of the correct type indicated by the object - and "get" methods will generally return `#f` or an object with an empty pointer
 you can check if the pointer is set with
 ```racket
 #|
