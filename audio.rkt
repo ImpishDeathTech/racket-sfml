@@ -70,14 +70,6 @@
       (when (sfMusic*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
     
     (define/public (set-loop flag)
       (when ptr
@@ -247,14 +239,6 @@
       (when (sfSoundBuffer*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
     
     (define/public (copy)
       (define out (new sound-buffer%))
@@ -319,14 +303,6 @@
         (send this kill)
         (set! ptr #f)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (start sample-rate)
       (when ptr
         (sfSoundBufferRecorder_start ptr sample-rate)))
@@ -383,14 +359,6 @@
         (send this kill)
         (set! ptr p)))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (copy)
       (define out (new sound%))
       (when ptr
@@ -400,7 +368,6 @@
     (define/public (play)
       (when ptr
         (sfSound_play ptr)))
-
 
     (define/public (pause)
       (when ptr
@@ -445,16 +412,16 @@
       (when ptr
         (sfSound_setVolume ptr (exact->inexact vol))))
 
-    (define/public (set-position v3)
+    (define/public (set-position position)
       (when ptr
-        (cond [(vector3? v3)
-               (sfSound_setPosition ptr v3)]
-              [(and (list? v3)
-                    (= (length v3) 3))
-               (sfSound_setPosition ptr (vector3 (car v3)
-                                                 (cadr v3)
-                                                 (caddr v3)))]
-              [else (printf "type mismatch: expected vector3 or list (length 3), got ~a" v3)])))
+        (cond [(vector3? position)
+               (sfSound_setPosition ptr position)]
+              [(and (list? position)
+                    (= (length position) 3))
+               (sfSound_setPosition ptr (vector3 (car position)
+                                                 (cadr position)
+                                                 (caddr position)))]
+              [else (printf "type mismatch: expected vector3 or list (length 3), got ~a" position)])))
 
     (define/public (set-relative-to-listener flag)
       (when ptr
@@ -484,13 +451,10 @@
           (sfSound_getVolume ptr)
           #f))
 
-    (define/public (relative-to-listener?)
+    (define/public (is-relative-to-listener?)
       (if ptr
           (sfSound_isRelativeToListener ptr)
           #f))
-
-    (define/public (is-relative-to-listener?)
-      (send this relative-to-listener?))
 
     (define/public (get-min-distance)
       (if ptr
@@ -534,14 +498,6 @@
         (send this kill)
         (set! ptr p))
 
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
     (define/public (start sample-rate)
       (when ptr
         (sfSoundRecorder_start ptr (abs (round sample-rate)))))
@@ -555,13 +511,10 @@
         (sfSoundRecorder_getSampleRate ptr)))
 
 
-    (define/public (available?)
+    (define/public (is-available?)
       (if ptr
           (sfSoundRecorder_isAvailable ptr)
           #f))
-
-    (define/public (is-available?)
-      (send this available?))
 
     (define/public (set-processing-interval interval)
       (when ptr
@@ -624,14 +577,6 @@
       (when (sfSoundStream*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
 
     (define/public (play)
       (when ptr
@@ -712,13 +657,10 @@
         (sfSoundStream_getVolume ptr)
         #f))
 
-    (define/public (relative-to-listener?)
+    (define/public (is-relative-to-listener?)
       (if ptr
           (sfSoundStream_isRelativeToListener ptr)
           #f))
-
-    (define/public (is-relative-to-listener?)
-      (send this relative-to-listener?))
 
     (define/public (get-min-distance)
       (if ptr
