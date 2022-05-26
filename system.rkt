@@ -548,15 +548,7 @@
       (when (sfClock*? new-ptr)
         (send this kill)
         (set! ptr new-ptr)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
+    
     (define/public (get-elapsed-time)
       (if ptr
           (sfClock_getElapsedTime ptr)
@@ -594,15 +586,7 @@
       (when (sfMutex*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
-
+    
     (define/public (lock)
       (when ptr
         (sfMutex_lock ptr)))
@@ -644,14 +628,6 @@
       (when (sfThread*? p)
         (send this kill)
         (set! ptr p)))
-
-    (define/public (valid?)
-      (if ptr
-          #t
-          #f))
-
-    (define/public (is-valid?)
-      (send this valid?))
     
     (define/public (launch)
       (when ptr
