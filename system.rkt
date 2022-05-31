@@ -17,26 +17,30 @@
          
 (define-generics angle-func
   (as-radians angle-func)
-  (as-degrees angle-func))
+  (print-angle angle-func)
+  (print-angle/radians angle-func))
 
 (struct angle (degrees)
   #:transparent
-  #:mutable
   #:methods gen:angle-func
   [(define (as-radians angle)
      (* (angle-degrees angle) (/ pi 180)))
-   (define (as-degrees angle)
-     (exact->inexact (angle-degrees angle)))])
 
-(define (degrees num)
-  (set! num (exact->inexact num))
-  (angle num))
+   (define (print-angle angle)
+     (printf "~a°" (angle-degrees angle)))
 
-(define (radians num)
-  (set! num (exact->inexact num))
-  (angle (* num (/ 180 pi))))
+   (define (print-angle/radians angle)
+     (printf "~a rad" (as-radians angle)))])
 
-(define angle-zero (angle 0.))
+(define (degrees °)
+  (set! ° (exact->inexact °))
+  (angle °))
+
+(define (radians rad)
+  (set! rad (exact->inexact rad))
+  (angle (* rad (/ 180 pi))))
+
+(define angle-zero (degrees 0))
 
 ; ------------------------------------------------------
 ; Vector2.hpp
