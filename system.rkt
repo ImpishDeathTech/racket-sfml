@@ -15,14 +15,18 @@
         val
         (+ val b))))
          
-(define-generics angle-funcs
-  (angle-radians angle-funcs))
+(define-generics angle-func
+  (as-radians angle-func)
+  (as-degrees angle-func))
 
 (struct angle (degrees)
   #:transparent
   #:mutable
-  #:methods gen:angle-funcs
-  [(define (angle-radians angle) (* (angle-degrees angle) (/ pi 180)))])
+  #:methods gen:angle-func
+  [(define (as-radians angle)
+     (* (angle-degrees angle) (/ pi 180)))
+   (define (as-degrees angle)
+     (exact->inexact (angle-degrees angle)))])
 
 (define (degrees num)
   (set! num (exact->inexact num))
