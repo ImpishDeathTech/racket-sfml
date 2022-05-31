@@ -61,7 +61,7 @@
                     (inexact->exact
                      (truncate y)))))
 
-(define make-v2u vector2u)
+(define make-v2u vector2u) 
 
 (define vector2f? sfVector2f?)
 (define vector2f-x sfVector2f-x)
