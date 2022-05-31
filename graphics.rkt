@@ -12,18 +12,6 @@
 (define blend-mode make-sfBlendMode)
 (define blend-mode? sfBlendMode?)
 
-(define blend-mode-hash
-  (hasheq 'color (hasheq 'src sfBlendMode-colorSrcFactor
-                         'dst sfBlendMode-colorDstFactor
-                         'equation sfBlendMode-colorEquation)
-          'alpha (hasheq 'src sfBlendMode-alphaSrcFactor
-                         'dst sfBlendMode-alphaDstFactor
-                         'equation sfBlendMode-alphaEquation)))
-
-(define (blend-mode-ref mode catigory value)
-  ((hash-ref (hash-ref blend-mode-hash catigory) value) mode))
-
-(define blend-ref blend-mode-ref)
 (define blend-alpha sfBlendAlpha)
 (define blend-add sfBlendAdd)
 (define blend-mul sfBlendMultiply)
