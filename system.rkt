@@ -10,11 +10,10 @@
 (define (positive-remainder a b)
   (set! a (exact->inexact a))
   (set! b (exact->inexact b))
-  (when (> b 0)
-    (let ([val (- a (* (truncate (/ a b)) b))])
-      (if (>= val 0)
-          val
-          (+ val b)))))
+  (let ([val (- a (* (truncate (/ a b)) b))])
+    (if (>= val 0)
+        val
+        (+ val b))))
          
 (define-generics angle-funcs
   (angle-radians angle-funcs))
