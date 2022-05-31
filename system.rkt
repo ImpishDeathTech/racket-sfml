@@ -4,6 +4,38 @@
 (provide (all-defined-out))
 
 ; ------------------------------------------------------
+; Angle.hpp
+; ------------------------------------------------------
+
+(define (positive-remainder a b)
+  (set! a (exact->inexact a))
+  (set! b (exact->inexact b))
+  (when (> b 0)
+    (let ([val (- a (* (truncate (/ a b)) b))])
+      (if (>= val 0)
+          val
+          (+ val b)))))
+         
+(define-generics angle-funcs
+  (angle-radians angle-funcs))
+
+(struct angle (degrees)
+  #:transparent
+  #:mutable
+  #:methods gen:angle-funcs
+  [(define (angle-radians angle) (* (angle-degrees angle) (/ pi 180)))])
+
+(define (degrees num)
+  (set! num (exact->inexact num))
+  (angle num))
+
+(define (radians num)
+  (set! num (exact->inexact num))
+  (angle (* num (/ 180 pi))))
+
+(define angle-zero (angle 0.))
+
+; ------------------------------------------------------
 ; Vector2.hpp
 ; ------------------------------------------------------
 
