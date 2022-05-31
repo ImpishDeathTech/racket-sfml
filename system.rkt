@@ -1,5 +1,6 @@
 #lang racket
-(require csfml)
+(require csfml
+         racket/generic)
 
 (provide (all-defined-out))
 
