@@ -2490,7 +2490,7 @@
   (class* object%
     (drawable<%>
      transformable<%>)
-
+    (super-new)
     (field [ptr #f]
            [show? #f])
 
