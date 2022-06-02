@@ -968,11 +968,14 @@
       (unless ptr
         (set! ptr (sfTexture_create (abs (inexact->exact (truncate x)))
                                     (abs (inexact->exact (truncate y)))))))
-
-    (define/public (make-from-file path)
+                                    
+    (define/public (make-from-file path rect)
       (unless ptr
-        (set! ptr (sfTexture_createFromFile path))))
-
+        (if (or (intrect? rect)
+                (boolean? rect))
+            (set! ptr (sfTexture_createFromFile path rect))
+            (set! ptr (sfTexture_createFromFile path #f)))))
+   
     (define/public (make-from-memory data size)
       (unless ptr
         (set! ptr (sfTexture_createFromMemory data size))))
