@@ -722,6 +722,34 @@
             (florect-contains? rect-clause v2-clause)]
            [else #f])]))
 
+(define (intrect-intersects*? rect-a rect-b rect-c)
+  (if (and (intrect? rect-a)
+           (intrect? rect-b)
+           (intrect? rect-c))
+      (sfIntRect_intersects rect-a rect-b rect-c)
+      #f))
+
+(define (intrect-intersects? rect-a rect-b)
+  (define collision (intrect 0 0 0 0))
+  (if (and (intrect? rect-a)
+           (intrect? rect-b))
+      (sfIntRect_intersects rect-a rect-b collision)
+      #f))
+
+(define (florect-intersects*? rect-a rect-b rect-c)
+  (if (and (florect? rect-a)
+           (florect? rect-b)
+           (florect? rect-c))
+      (sfFloatRect_intersects rect-a rect-b rect-c)
+      #f))
+
+(define (florect-intersects? rect-a rect-b)
+  (define collision (florect 0 0 0 0))
+  (if (and (florect? rect-a)
+           (florect? rect-b))
+      (sfFloatRect_intersects rect-a rect-b)
+      #f))
+
 (define-syntax rect-intersects?
   (syntax-rules ()
     [(_ rect-a rect-b)
