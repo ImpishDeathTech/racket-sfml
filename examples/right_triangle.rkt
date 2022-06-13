@@ -12,7 +12,7 @@ using a vertex array
 
 ; create the window
 (send* window
-  (make (video-mode 800 600 32) "SFML Works! >:3" '(sfDefaultStyle))
+  (make (video-mode 800 600 32) "SFML Triangle Works! >:3" '(sfDefaultStyle))
   (clear)
   (display)
   (set-visible #f))
