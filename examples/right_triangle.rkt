@@ -1,7 +1,8 @@
 #lang racket
 
 #|
-A vertex array example to create a very simple triangle
+A example of to create a very simple right angled triangle
+using a vertex array
 |#
 
 (require sfml)
