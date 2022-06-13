@@ -5,21 +5,23 @@
 #|
 this program is a clone of ex_3.rkt from
 the racket-csfml examples
+but it turns the circle into a triangle with a little trick >;3
 |#
 
 ; define your objects like so
 (define window (new render-window%))
-(define circle (new circle-shape%))
+(define fake-triangle (new circle-shape%))
 
 ; make the main window
 (send* window
   (make (video-mode 800 600 32) "SFML Works! ^,..,^" '(sfDefaultStyle))
   (set-visible #f))
 
-; make the circle
-(send* circle
+; make the fake triangle
+(send* fake-triangle
   (make)
   (set-radius 20)
+  (set-point-count 3) 
   (set-fill-color (color 0 0 0 0))
   (set-outline-color (color 255 0 255))
   (set-outline-thickness 3)
@@ -48,11 +50,11 @@ the racket-csfml examples
             (send window close)))))
       (poll-events))))
 
-; render your circle
+; render your fake triangle
 (define (render)
   (send* window
     (clear)
-    (draw circle)
+    (draw fake-triangle)
     (display)))
 
 (define (game-loop)
@@ -81,4 +83,4 @@ to do this in one command and keep my code cleaner, usually
 |#
 
 (send window kill)
-(send circle kill)
+(send fake-triangle kill)
