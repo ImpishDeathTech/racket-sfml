@@ -14,7 +14,7 @@ but it turns the circle into a triangle with a little trick >;3
 
 ; make the main window
 (send* window
-  (make (video-mode 800 600 32) "SFML Works! ^,..,^" '(sfDefaultStyle))
+  (make (video-mode 800 600 32) "SFML Fake Triangle Works! ^,..,^" '(sfDefaultStyle))
   (set-visible #f))
 
 ; make the fake triangle
