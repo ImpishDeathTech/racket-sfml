@@ -1,5 +1,6 @@
 # racket-sfml 
-### An Object Oriented, kebab case layer for racket-csfml
+## An Object Oriented, kebab case layer for racket-csfml
+### by Fluffykins Allmighty, IDT
 
 Why? Because I love sfml, I love racket, I love the way racket does OO and I like consistency
 in my code. The csfml syntax does not fit with racket, and also drives me absolutely nuts in general.
